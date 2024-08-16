@@ -58,22 +58,26 @@ namespace FlashCardLearn.ViewModel
             {
                 if(_openFlashCardSetCommand == null)
                 {
-                    _openFlashCardSetCommand = new RelayCommand<Window>(OpenFlashCardSet);
+                    _openFlashCardSetCommand = new RelayCommand(OpenFlashCardSet, CanOpenFlashCardSets);
                 }
                 return _openFlashCardSetCommand;
             }
+        }
+
+        private bool CanOpenFlashCardSets(object obj)
+        {
+            return true;
         }
 
         private void OpenFlashCardSet(object obj)
         {
             // Implement the logic to open the selected flashcard set
             // For example, you could navigate to a new view or open a dialog
-            var mainWindow = obj as Window;
-            LearnView learnView = new LearnView();
-            learnView.Owner = mainWindow;
-            learnView.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            var flashCardSet = obj as FlashCardSet;
+            LearnView learnView = new LearnView(flashCardSet);
+            learnView.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            learnView.Show();
+            learnView.ShowDialog();
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)

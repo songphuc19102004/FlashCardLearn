@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Repositories.Models;
 
@@ -12,6 +13,8 @@ public partial class FlashCardSet
     public string Title { get; set; }
 
     public string Description { get; set; }
+
+    public int? Progress { get; set; } = 0;
 
     public virtual ICollection<FlashCard> FlashCards { get; set; } = new List<FlashCard>();
 }

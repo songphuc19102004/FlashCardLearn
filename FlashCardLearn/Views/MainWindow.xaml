@@ -68,8 +68,8 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Style="{StaticResource FlashCardSetStyle}">
-                                <Button Command="{Binding DataContext.OpenFlashCardSetCommand, RelativeSource={RelativeSource  AncestorType=Window}}"
-                                 CommandParameter="{x:Reference Name=mainWindow}" Background="#6D9886">
+                                <Button Command="{Binding DataContext.OpenFlashCardSetCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                 CommandParameter="{Binding}" Background="#6D9886">
                                     <TextBlock Text="{Binding Title}" 
                                        Style="{StaticResource TextStyle}" 
                                        FontSize="20"

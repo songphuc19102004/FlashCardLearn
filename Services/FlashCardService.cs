@@ -1,6 +1,7 @@
 ﻿using Repositories;
 using Repositories.Models;
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Security.Principal;
 
 namespace Services
@@ -16,6 +17,11 @@ namespace Services
         public async Task<IEnumerable<FlashCard>> GetFlashCardsAsync()
         {
             return await _flashCardRepository.GetFlashCardsAsync();
+        }
+
+        public ObservableCollection<FlashCard> GetFlashCardsBySetId(int id)
+        {
+            return _flashCardRepository.GetFlashCardsBySetId(id);
         }
     }
 }

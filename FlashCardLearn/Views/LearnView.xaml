@@ -28,6 +28,7 @@
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -50,11 +51,15 @@
         <!-- Card content -->
         
         <!-- Direction buttons -->
-        <Button Width="40" Height="40" Grid.Row="1" Margin="0 0 100 0">
-            <Image Source="/Resources/Images/back_arrow.png"></Image>
+        <Button Width="40" Height="40" Grid.Row="1" Margin="0 0 100 0" Style="{StaticResource ButtonStyle}">
+            <Button.Content>
+                <Image Source="/Resources/Images/left_arrow.png"></Image>
+            </Button.Content>
         </Button>
-        <Button Width="40" Height="40" Grid.Row="1" Margin="100 0 0 0">
-            <Image Source="/Resources/Images/right_arrow.png"></Image>
+        <Button Width="40" Height="40" Grid.Row="1" Margin="100 0 0 0" Style="{StaticResource ButtonStyle}"  Command="{Binding DataContext.ForwardCommand, RelativeSource={RelativeSource AncestorType=Window}}">
+            <Button.Content>
+                <Image Source="/Resources/Images/right_arrow.png"></Image>
+            </Button.Content>
         </Button>
         <!-- Direction buttons -->
         

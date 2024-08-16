@@ -13,7 +13,10 @@ public partial class FlashCardLearnContext : DbContext
     {
     }
 
-    public FlashCardLearnContext(){}
+    public FlashCardLearnContext()
+    {
+        
+    }
 
     public virtual DbSet<FlashCard> FlashCards { get; set; }
 
@@ -21,7 +24,7 @@ public partial class FlashCardLearnContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(@"Data Source=PHUC\PHUC;Initial Catalog=FlashCardLearn;User ID=sa;Password=123456789;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
+        optionsBuilder.UseSqlServer("Data Source=PHUC\\PHUC;Initial Catalog=FlashCardLearn;User ID=sa;Password=123456789;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -59,6 +62,7 @@ public partial class FlashCardLearnContext : DbContext
             entity.Property(e => e.Description)
                 .HasColumnType("text")
                 .HasColumnName("description");
+            entity.Property(e => e.Progress).HasColumnName("progress");
             entity.Property(e => e.Title)
                 .IsRequired()
                 .HasMaxLength(255)

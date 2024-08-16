@@ -10,10 +10,14 @@
 
   <ItemGroup>
     <None Remove="Resources\Images\flashcards.png" />
+    <None Remove="Resources\Images\left_arrow.png" />
+    <None Remove="Resources\Images\right_arrow.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\Images\flashcards.png" />
+    <Resource Include="Resources\Images\left_arrow.png" />
+    <Resource Include="Resources\Images\right_arrow.png" />
   </ItemGroup>
 
   <ItemGroup>

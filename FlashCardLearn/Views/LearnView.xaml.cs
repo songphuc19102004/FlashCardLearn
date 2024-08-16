@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repositories.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,11 +37,12 @@ namespace FlashCardLearn.Views
             "\"The beautiful thing about learning is that nobody can take it away from you\"",
             "\"Anyone who stops learning is old, whether at twenty or eighty. Anyone who keeps learning stays young\""
         };
-        public LearnView()
+        public LearnView(FlashCardSet flashCardSet)
         {
             InitializeComponent();
             Random rand = new Random();
-            this.Title = quotes[rand.Next(0, 15)];
+            this.Title = quotes[rand.Next(0, 13)];
+            this.DataContext = new ViewModel.LearnViewModel(flashCardSet);
         }
     }
 }

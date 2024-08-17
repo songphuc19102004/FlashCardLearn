@@ -62,7 +62,7 @@ public partial class FlashCardLearnContext : DbContext
             entity.Property(e => e.Description)
                 .HasColumnType("text")
                 .HasColumnName("description");
-            entity.Property(e => e.Progress).HasColumnName("progress");
+            entity.Property(e => e.Progress).HasColumnName("progress").HasDefaultValue(0);
             entity.Property(e => e.Title)
                 .IsRequired()
                 .HasMaxLength(255)

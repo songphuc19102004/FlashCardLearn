@@ -22,6 +22,8 @@ namespace FlashCardLearn.ViewModel
         private FlashCard _shownFlashCard;
         private ICommand _forwardCommand;
         private ICommand _backCommand;
+        private ICommand _flipCommand;
+        private bool _isQuestionVisible = true;
         private FlashCardService _flashCardService;
         private FlashCardSetService _flashCardSetService;
 
@@ -32,17 +34,7 @@ namespace FlashCardLearn.ViewModel
             _currentFlashCardSet = flashCardSet;
             _currentFlashCards = _flashCardService.GetFlashCardsBySetId(_currentFlashCardSet.Id);
         }
-
-        public FlashCard ShownFlashCard
-        {
-            get => _shownFlashCard;
-            set
-            {
-                _shownFlashCard = value;
-                OnPropertyChanged();
-            }
-        }
-
+        
         public FlashCardSet CurrentFlashCardSet
         {
             get => _currentFlashCardSet;
@@ -52,6 +44,56 @@ namespace FlashCardLearn.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        public ObservableCollection<FlashCard> CurrentFlashCards
+        {
+            get => _currentFlashCards;
+            set
+            {
+                _currentFlashCards = value;
+                OnPropertyChanged();
+            }
+        }
+
+        
+
+        public int? Progress
+        {
+            get => _currentFlashCardSet.Progress;
+            set
+            {
+                _currentFlashCardSet.Progress = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int OverallProgress
+        {
+            get => _currentFlashCards.Count - 1;
+        }
+
+        public FlashCard ShownFlashCard
+        {
+            get => _currentFlashCards[Progress.Value];
+            set
+            {
+                _shownFlashCard = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsQuestionVisible
+        {
+            get => _isQuestionVisible;
+            set
+            {
+                _isQuestionVisible = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsAnswerVisible));
+            }
+        }
+
+        public bool IsAnswerVisible => !IsQuestionVisible;
 
         public ICommand ForwardCommand
         {
@@ -73,11 +115,68 @@ namespace FlashCardLearn.ViewModel
 
         private void Forward(object obj)
         {
-            _currentFlashCardSet.Progress++;
+            if(Progress < _currentFlashCards.Count - 1)
+            {
+                Progress++;
+                ShownFlashCard = _currentFlashCards[Progress.Value];
+            }
+            else
+            {
+                MessageBox.Show("Congratulations!, You have finished this flash card set!", "Congrats", MessageBoxButton.OK);
+            }
+            IsQuestionVisible = true;
+        }
+
+        public ICommand BackCommand
+        {
+            get
+            {
+                if(_backCommand == null)
+                {
+                    _backCommand = new RelayCommand(Back, CanBack);
+                }
+                return _backCommand;
+            }
+        }
+
+        public bool CanBack(object obj)
+        {
+            if(Progress.Value == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public void Back(object obj)
+        {
+            Progress--;
+            ShownFlashCard = _currentFlashCards[Progress.Value];
+            IsQuestionVisible = true;
+        }
+
+        public ICommand FlipCommand 
+        {
+            get
+            {
+                if(_flipCommand == null)
+                {
+                    _flipCommand = new RelayCommand(Flip, CanFlip);
+                }
+                return _flipCommand;
+            }
 
         }
 
+        private bool CanFlip(object obj)
+        {
+            return true;
+        }
 
+        private void Flip(object obj)
+        {
+            IsQuestionVisible = !IsQuestionVisible;
+        }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {

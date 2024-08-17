@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlashCardLearn.Views"
         mc:Ignorable="d"
-        Title="LearnView" Height="450" Width="800"
+        Title="LearnView" Height="600" Width="800"
         Background="#393E46"
         Icon="/Resources/Images/flashcards.png">
     <Window.Resources>
@@ -38,6 +38,7 @@
             <Setter Property="Margin" Value="10"/>
             <Setter Property="CornerRadius" Value="20"/>
         </Style>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -47,22 +48,47 @@
         </Grid.RowDefinitions>
 
         <!-- Card content -->
-         
-        <!-- Card content -->
+        <Button Command="{Binding FlipCommand}" Cursor="Hand"
+            Background="#6D9886" 
+            Margin="40" 
+            BorderThickness="0">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" 
+                        CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Center" 
+                                      VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+            <Grid>
+                <TextBlock Text="{Binding ShownFlashCard.Question}" 
+                       Style="{StaticResource TextStyle}" 
+                       Margin="20" 
+                       TextWrapping="Wrap" 
+                       Visibility="{Binding IsQuestionVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                <TextBlock Text="{Binding ShownFlashCard.Answer}" 
+                       Style="{StaticResource TextStyle}" 
+                       Margin="20" 
+                       TextWrapping="Wrap" 
+                       Visibility="{Binding IsAnswerVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            </Grid>
+        </Button>
+        <!-- End of Card content -->
         
         <!-- Direction buttons -->
-        <Button Width="40" Height="40" Grid.Row="1" Margin="0 0 100 0" Style="{StaticResource ButtonStyle}">
+        <Button Width="40" Height="40" Grid.Row="1" Margin="0 0 100 0" Style="{StaticResource ButtonStyle}" Command="{Binding DataContext.BackCommand, RelativeSource={RelativeSource AncestorType=Window}}">
             <Button.Content>
                 <Image Source="/Resources/Images/left_arrow.png"></Image>
             </Button.Content>
         </Button>
+        <ProgressBar Height="20" Width="200" Minimum="0" Maximum="{Binding OverallProgress}" Value="{Binding Progress}" VerticalAlignment="Bottom"></ProgressBar>
         <Button Width="40" Height="40" Grid.Row="1" Margin="100 0 0 0" Style="{StaticResource ButtonStyle}"  Command="{Binding DataContext.ForwardCommand, RelativeSource={RelativeSource AncestorType=Window}}">
             <Button.Content>
                 <Image Source="/Resources/Images/right_arrow.png"></Image>
             </Button.Content>
         </Button>
         <!-- Direction buttons -->
-        
     </Grid>
     
 </Window>

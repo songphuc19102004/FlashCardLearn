@@ -9,3 +9,7 @@ Date started: August 14th 2024
   - Able to return to the last viewd flash card.
   - Exam mode: Choose a flash card set and do a test on that set.
   - ...
+
+# May have feature
+  - Import quizlet flash card set to your desktop app.
+  - ...

@@ -1,4 +1,5 @@
-﻿using Repositories.Models;
+﻿using FlashCardLearn.Interfaces;
+using Repositories.Models;
 using Services;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using System.Windows.Navigation;
 
 namespace FlashCardLearn.ViewModel
 {
-    public class LearnViewModel : INotifyPropertyChanged
+    public class LearnViewModel : INotifyPropertyChanged, ICloseWindows
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         private FlashCardSet _currentFlashCardSet;
@@ -26,13 +27,12 @@ namespace FlashCardLearn.ViewModel
         private bool _isQuestionVisible = true;
         private FlashCardService _flashCardService;
         private FlashCardSetService _flashCardSetService;
+        public Action Close { get; set; }
 
-        public LearnViewModel(FlashCardSet flashCardSet) 
+        public LearnViewModel() 
         {
             _flashCardService = new FlashCardService();
             _flashCardSetService = new FlashCardSetService();
-            _currentFlashCardSet = flashCardSet;
-            _currentFlashCards = _flashCardService.GetFlashCardsBySetId(_currentFlashCardSet.Id);
         }
         
         public FlashCardSet CurrentFlashCardSet
@@ -42,6 +42,8 @@ namespace FlashCardLearn.ViewModel
             {
                 _currentFlashCardSet = value;
                 OnPropertyChanged();
+                InitializeFlashCards();
+
             }
         }
 
@@ -55,8 +57,6 @@ namespace FlashCardLearn.ViewModel
             }
         }
 
-        
-
         public int? Progress
         {
             get => _currentFlashCardSet.Progress;
@@ -64,6 +64,21 @@ namespace FlashCardLearn.ViewModel
             {
                 _currentFlashCardSet.Progress = value;
                 OnPropertyChanged();
+            }
+        }
+
+        private void InitializeFlashCards()
+        {
+            if(_currentFlashCardSet != null)
+            {
+                _currentFlashCards = new ObservableCollection<FlashCard>(_flashCardService.GetFlashCardsBySetId(_currentFlashCardSet.Id));
+                Progress = _currentFlashCardSet.Progress;
+                if(_currentFlashCards.Any())
+                {
+                    ShownFlashCard = _currentFlashCards[Progress.Value];
+                }
+                OnPropertyChanged(nameof(CurrentFlashCards));
+                OnPropertyChanged(nameof(OverallProgress));
             }
         }
 
@@ -176,6 +191,13 @@ namespace FlashCardLearn.ViewModel
         private void Flip(object obj)
         {
             IsQuestionVisible = !IsQuestionVisible;
+        }
+
+        public bool CanClose()
+        {
+            //Update progress when close
+            _flashCardSetService.UpdateAsync(_currentFlashCardSet);
+            return true;
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)

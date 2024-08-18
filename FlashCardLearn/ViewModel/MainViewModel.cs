@@ -69,14 +69,29 @@ namespace FlashCardLearn.ViewModel
             return true;
         }
 
-        private void OpenFlashCardSet(object obj)
+        private async void OpenFlashCardSet(object obj)
         {
             // Implement the logic to open the selected flashcard set
-            // For example, you could navigate to a new view or open a dialog
+            // TODO: If there are no flash cards in the set, redirect
+            // ask user to add flash card to FlashCardManagerView
             var flashCardSet = obj as FlashCardSet;
-            LearnView learnView = new LearnView(flashCardSet);
-            learnView.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
+            if(flashCardSet == null)
+            {
+                return;
+            }
+
+            if(await _flashCardSetService.GetFlashCardCountForSetAsync(flashCardSet.Id) == 0)
+            {
+                MessageBox.Show("What the fuck bro? There is nothing here");
+                return;
+            }
+            var learnViewModel = new LearnViewModel();
+            learnViewModel.CurrentFlashCardSet = flashCardSet;
+
+            LearnView learnView = new LearnView();
+            learnView.DataContext = learnViewModel;
+            learnView.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             learnView.ShowDialog();
         }
 

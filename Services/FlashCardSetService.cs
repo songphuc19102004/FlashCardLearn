@@ -17,5 +17,15 @@ namespace Services
         {
             return await _flashCardSetRepository.GetFlashCardSetsAsync();
         }
+
+        public async Task<bool> UpdateAsync(FlashCardSet flashCardSet)
+        {
+            return await _flashCardSetRepository.UpdateAsync(flashCardSet);
+        }
+
+        public async Task<int> GetFlashCardCountForSetAsync(int flashcardsetId)
+        {
+            return await _flashCardSetRepository.GetFlashCardCountForSetAsync(flashcardsetId);
+        }
     }
 }

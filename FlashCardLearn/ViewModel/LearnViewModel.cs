@@ -5,7 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Media;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -137,6 +140,8 @@ namespace FlashCardLearn.ViewModel
             }
             else
             {
+                SoundPlayer soundPlayer = new SoundPlayer(@"C:\Users\Phuc\Desktop\repo2\FlashCardLearn\FlashCardLearn\Resources\Sounds\children_yay.wav");
+                soundPlayer.Play();
                 MessageBox.Show("Congratulations!, You have finished this flash card set!", "Congrats", MessageBoxButton.OK);
             }
             IsQuestionVisible = true;

@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlashCardLearn"
         mc:Ignorable="d"
-        Title="Flash Cards!" Height="768" Width="1024"
+        Title="Flash Cards!" Height="768" Width="1366"
+        ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize"
         Icon="/Resources/Images/flashcards.png"
         Background="#393E46"
         Name ="mainView">

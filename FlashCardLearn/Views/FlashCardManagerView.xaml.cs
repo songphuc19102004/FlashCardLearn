@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlashCardLearn.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,16 @@ namespace FlashCardLearn.Views
         public FlashCardManagerView()
         {
             InitializeComponent();
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void InfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("You can add/edit/delete flash card by using the grid below", "Guide", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

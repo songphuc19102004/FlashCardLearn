@@ -81,18 +81,18 @@ namespace FlashCardLearn.ViewModel
                 return;
             }
 
-            if(await _flashCardSetService.GetFlashCardCountForSetAsync(flashCardSet.Id) == 0)
-            {
-                MessageBox.Show("What the fuck bro? There is nothing here");
-                return;
-            }
-            var learnViewModel = new LearnViewModel();
-            learnViewModel.CurrentFlashCardSet = flashCardSet;
+            //if(await _flashCardSetService.GetFlashCardCountForSetAsync(flashCardSet.Id) == 0)
+            //{
+            //    MessageBox.Show("What the fuck bro? There is nothing here");
+            //    return;
+            //}
 
-            LearnView learnView = new LearnView();
-            learnView.DataContext = learnViewModel;
-            learnView.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            learnView.ShowDialog();
+            var viewModel = new FlashCardManagerViewModel();
+            viewModel.SelectedFlashCardSet = flashCardSet;
+            
+            FlashCardManagerView managerView = new FlashCardManagerView();
+            managerView.DataContext = viewModel;
+            managerView.ShowDialog();
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)

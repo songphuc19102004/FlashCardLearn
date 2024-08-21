@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlashCardLearn.Views"
         mc:Ignorable="d"
-        Title="LearnView" Height="600" Width="800"
+        Title="LearnView" Height="768" Width="1366"
         Background="#393E46"
         Icon="/Resources/Images/flashcards.png">
     <Window.Resources>

@@ -66,14 +66,15 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0" Width="200" Height="20" HorizontalAlignment="Left"></TextBox>
+                    <!--Search box-->
+                    <TextBox Grid.Column="0" Width="200" Height="20" HorizontalAlignment="Left" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                     <Button Grid.Column="1" Width="30" Height="30" HorizontalAlignment="Right" Command="{Binding CreateCommand}">
                         <Image Source="/Resources/Images/add_icon.png"/>
                     </Button>
                 </Grid>
                 
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding FlashCardSets}">
+                    <ItemsControl ItemsSource="{Binding FilteredFlashCardSets}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid Columns="5"/>
@@ -116,12 +117,8 @@
 
             <!-- Content for each row -->
             <TextBlock Style="{StaticResource TextStyle}" Foreground="#F2E7D5" Grid.Row="0">Menu</TextBlock>
-            <Button Style="{StaticResource ButtonStyle}" Grid.Row="1">Home</Button>
-            <Button Style="{StaticResource ButtonStyle}" Grid.Row="2">Focus</Button>
-            <Button Style="{StaticResource ButtonStyle}" Grid.Row="3">Exam</Button>
-            <Button Style="{StaticResource ButtonStyle}" Grid.Row="4">
-                <TextBlock TextWrapping="Wrap" TextAlignment="Center">Import/Export</TextBlock>
-            </Button>
+            <Button Style="{StaticResource ButtonStyle}" Grid.Row="1">Focus</Button>
+            <Button Style="{StaticResource ButtonStyle}" Grid.Row="2">Exam</Button>
             <Button Style="{StaticResource ButtonStyle}" FontSize="20" Grid.Row="5">Settings</Button>
         </Grid>
         <!-- Separate line -->

@@ -81,7 +81,7 @@ namespace FlashCardLearn.ViewModel
         {
             get
             {
-                return IsVisibleCreate;
+                return IsVisibleLearn;
             }
         }
 

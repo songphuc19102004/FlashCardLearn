@@ -21,17 +21,10 @@ namespace FlashCardLearn.ViewModel
         private ICommand _openFlashCardSetCommand;
         private ICommand _createFlashCardSetCommand;
         private ObservableCollection<FlashCardSet> _flashCardSets;
+        private ObservableCollection<FlashCardSet> _filteredFlashCardSets;
         private FlashCardService _flashCardService;
         private FlashCardSetService _flashCardSetService;
-        public ObservableCollection<FlashCardSet> FlashCardSets
-        {
-            get => _flashCardSets;
-            set
-            {
-                _flashCardSets = value;
-                OnPropertyChanged();
-            }
-        }
+        private string _searchText;
 
         public MainViewModel()
         {
@@ -48,9 +41,49 @@ namespace FlashCardLearn.ViewModel
         private async Task LoadFlashCardSets()
         {
             var flashCardSets = await _flashCardSetService.GetFlashCardSetsAsync();
-            Debug.WriteLine($"Loaded {flashCardSets.Count()} flash card sets");
-            FlashCardSets = new ObservableCollection<FlashCardSet>(flashCardSets);
-            Debug.WriteLine($"FlashCardSets property now has {FlashCardSets.Count} items");
+            _flashCardSets = new ObservableCollection<FlashCardSet>(flashCardSets);
+            FilteredFlashCardSets = _flashCardSets; 
+        }
+
+        public string SearchText 
+        {
+            get => _searchText;
+            set
+            {
+                if(_searchText != value)
+                {
+                    _searchText = value;
+                    OnPropertyChanged();
+                    FilterFlashCardSets();
+                }
+            }
+        }
+
+        public ObservableCollection<FlashCardSet> FilteredFlashCardSets
+        {
+            get
+            {
+                return _filteredFlashCardSets;
+            }
+            set
+            {
+                _filteredFlashCardSets = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private void FilterFlashCardSets()
+        {
+            if(string.IsNullOrWhiteSpace(SearchText))
+            {
+                FilteredFlashCardSets = new ObservableCollection<FlashCardSet>(_flashCardSets);
+            }
+            else
+            {
+                FilteredFlashCardSets = new ObservableCollection<FlashCardSet>(
+                    _flashCardSets.Where(set => set.Title.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+                );
+            }
         }
 
         #region Open

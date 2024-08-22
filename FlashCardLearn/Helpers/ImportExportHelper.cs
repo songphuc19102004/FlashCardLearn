@@ -51,7 +51,7 @@ namespace Services
             {
                 Title = "Choose Export File Location",
                 Filter = "JSON files (*.json)|*.json",
-                DefaultExt = "json"
+                DefaultExt = "json",
             };
             if(saveFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -69,6 +69,11 @@ namespace Services
                     MessageBox.Show($"An error occurred while saving the file: {ex.Message}");
                 }
             }
+        }
+
+        public static void ImportJsonToFlashcardList()
+        {
+            //TODO:
         }
     }
 }

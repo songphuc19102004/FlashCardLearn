@@ -66,10 +66,29 @@
                 <TextBox Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedFlashCardSet.Title}"></TextBox>
             </Border>
             <!--Learn button-->
-            <Button Grid.Column="2" Content="Learn!" Style="{StaticResource ButtonStyle}" Margin="100 130" Command="{Binding LearnCommand}" CommandParameter="{x:Reference Name=managerWindow}" Visibility="{Binding IsVisibleLearn, Converter={StaticResource BooleanToVisibilityConverter}}" ></Button>
+            <Button Grid.Column="2" Content="Learn!" Style="{StaticResource ButtonStyle}" Margin="100 130" Command="{Binding LearnCommand}" CommandParameter="{x:Reference Name=managerWindow}" Visibility="{Binding IsVisibleLearn, Converter={StaticResource BooleanToVisibilityConverter}}"></Button>
+
+            <Button Grid.Column="2" Content="Create!" Style="{StaticResource ButtonStyle}" Margin="100 130" Command="{Binding CreateCommand}" CommandParameter="{x:Reference Name=managerWindow}" Visibility="{Binding IsVisibleCreate, Converter={StaticResource BooleanToVisibilityConverter}}"></Button>
+
+            <!--Left panel-->
+            <StackPanel Orientation="Vertical" Grid.Column="0" Margin="10 10 0 0">
+                <!--Back button-->
+                <Button Style="{StaticResource ButtonStyle}" FontSize="20" Width="40" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="BackButton_Click">
+                    <Image Source="/Resources/Images/back_icon.png"></Image>
+                </Button>
+                <TextBlock Style="{StaticResource TextStyle}" Text="Options"></TextBlock>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Content="Import" Style="{StaticResource ButtonStyle}" FontSize="20" Width="auto" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left"></Button>
+                    <Button Content="Export" Style="{StaticResource ButtonStyle}" Visibility="{Binding IsVisibleExport, Converter={StaticResource BooleanToVisibilityConverter}}" FontSize="20" Width="auto" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Click"></Button>
+                </StackPanel>
+                
+            </StackPanel>
+            <!--Left panel-->
             
-            <!--Back button-->
-            <Button Grid.Column="0" Content="Back" Style="{StaticResource ButtonStyle}" FontSize="20" Width="60" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" Click="BackButton_Click"></Button>
+
+            <Button MaxWidth="35" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="30 0 0 0" Click="InfoButton_Click">
+                <Image Source="/Resources/Images/info.png"></Image>
+            </Button>
 
             <Button MaxWidth="35" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="30 0 0 0" Click="InfoButton_Click">
                 <Image Source="/Resources/Images/info.png"></Image>

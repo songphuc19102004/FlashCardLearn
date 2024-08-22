@@ -19,6 +19,7 @@ namespace FlashCardLearn.ViewModel
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         private ICommand _openFlashCardSetCommand;
+        private ICommand _createFlashCardSetCommand;
         private ObservableCollection<FlashCardSet> _flashCardSets;
         private FlashCardService _flashCardService;
         private FlashCardSetService _flashCardSetService;
@@ -52,6 +53,7 @@ namespace FlashCardLearn.ViewModel
             Debug.WriteLine($"FlashCardSets property now has {FlashCardSets.Count} items");
         }
 
+        #region Open
         public ICommand OpenFlashCardSetCommand
         {
             get
@@ -81,12 +83,6 @@ namespace FlashCardLearn.ViewModel
                 return;
             }
 
-            //if(await _flashCardSetService.GetFlashCardCountForSetAsync(flashCardSet.Id) == 0)
-            //{
-            //    MessageBox.Show("What the fuck bro? There is nothing here");
-            //    return;
-            //}
-
             var viewModel = new FlashCardManagerViewModel();
             viewModel.SelectedFlashCardSet = flashCardSet;
             
@@ -94,6 +90,36 @@ namespace FlashCardLearn.ViewModel
             managerView.DataContext = viewModel;
             managerView.ShowDialog();
         }
+        #endregion
+        #region Create
+        public ICommand CreateCommand
+        {
+            get
+            {
+                if(_createFlashCardSetCommand == null)
+                {
+                    _createFlashCardSetCommand = new RelayCommand(Create, CanCreate);
+                }
+                return _createFlashCardSetCommand;
+            }
+        }
+
+        private bool CanCreate(object obj)
+        {
+            return true;
+        }
+
+        private void Create(object obj) 
+        {
+            FlashCardManagerViewModel flashCardManagerViewModel = new FlashCardManagerViewModel();
+            flashCardManagerViewModel.IsCreateWindow = true;
+
+            FlashCardManagerView view = new FlashCardManagerView();
+            view.DataContext = flashCardManagerViewModel;
+            view.ShowDialog();
+        }
+
+        #endregion
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {

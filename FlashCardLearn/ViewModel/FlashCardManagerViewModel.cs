@@ -26,12 +26,14 @@ namespace FlashCardLearn.ViewModel
         private ICommand _editCommand;
         private ICommand _deleteCommand;
         private ICommand _learnCommand;
+        private bool _isCreateWindow;
         public Action Close { get; set; }
 
         public FlashCardManagerViewModel()
         {
             _flashCardService = new FlashCardService();
             _flashCardSetService = new FlashCardSetService();
+            _isCreateWindow = false;
         }
 
         public FlashCardSet SelectedFlashCardSet
@@ -59,11 +61,39 @@ namespace FlashCardLearn.ViewModel
         {
             get
             {
-                if(_flashCards.Count == 0)
+                if(_isCreateWindow || _flashCards.Count == 0)
                 {
                     return false;
                 }
-                else return true;
+                return true;
+            }
+        }
+
+        public bool IsVisibleCreate
+        {
+            get
+            {
+                return !IsVisibleLearn;
+            }
+        }
+
+        public bool IsVisibleExport
+        {
+            get
+            {
+                return IsVisibleCreate;
+            }
+        }
+
+        public bool IsCreateWindow
+        {
+            get 
+            {
+                return _isCreateWindow;
+            }
+            set
+            {
+                _isCreateWindow = value;
             }
         }
 

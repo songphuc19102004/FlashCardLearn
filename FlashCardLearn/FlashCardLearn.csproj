@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\add_icon.png" />
+    <None Remove="Resources\Images\back_icon.png" />
     <None Remove="Resources\Images\flashcards.png" />
     <None Remove="Resources\Images\info.png" />
     <None Remove="Resources\Images\left_arrow.png" />
@@ -17,6 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\add_icon.png" />
+    <Resource Include="Resources\Images\back_icon.png" />
     <Resource Include="Resources\Images\flashcards.png" />
     <Resource Include="Resources\Images\info.png" />
     <Resource Include="Resources\Images\left_arrow.png" />

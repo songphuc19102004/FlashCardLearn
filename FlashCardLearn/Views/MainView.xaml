@@ -56,32 +56,47 @@
             <!-- Title -->
             <TextBlock Style="{StaticResource TextStyle}">My Flash Cards!</TextBlock>
             <!-- Title -->
-            <TextBox Grid.Row="0" Width="200" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="43 0 0 0"></TextBox>
+            
+            
 
             <!-- Flash card sets -->
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                <ItemsControl  ItemsSource="{Binding FlashCardSets}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid Columns="3"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Style="{StaticResource FlashCardSetStyle}">
-                                <Button Command="{Binding DataContext.OpenFlashCardSetCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                 CommandParameter="{Binding}" Background="#6D9886">
-                                    <TextBlock Text="{Binding Title}" 
-                                       Style="{StaticResource TextStyle}" 
-                                       FontSize="20"
-                                       TextWrapping="Wrap"
-                                       TextAlignment="Center"/> 
-                                </Button>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
+            <StackPanel Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Width="200" Height="20" HorizontalAlignment="Left"></TextBox>
+                    <Button Grid.Column="1" Width="30" Height="30" HorizontalAlignment="Right" Command="{Binding CreateCommand}">
+                        <Image Source="/Resources/Images/add_icon.png"/>
+                    </Button>
+                </Grid>
+                
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding FlashCardSets}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="5"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource FlashCardSetStyle}">
+                                    <Button Command="{Binding DataContext.OpenFlashCardSetCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                     CommandParameter="{Binding}" Background="#6D9886">
+                                        <TextBlock Text="{Binding Title}" 
+                           Style="{StaticResource TextStyle}" 
+                           FontSize="20"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"/>
+                                    </Button>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </StackPanel>
+            
             <!-- Flash card sets -->
             
         </Grid>

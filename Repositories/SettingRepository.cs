@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlashCardLearn.ViewModel
+namespace Repositories
 {
-    public class SettingsViewModel
+    public class SettingRepository
     {
+
     }
 }

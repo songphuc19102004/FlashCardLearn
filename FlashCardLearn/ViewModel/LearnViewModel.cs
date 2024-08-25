@@ -1,4 +1,7 @@
-﻿using FlashCardLearn.Interfaces;
+﻿using FlashCardLearn.Commands;
+using FlashCardLearn.Interfaces;
+using FlashCardLearn.Services;
+using FlashCardLearn.Stores;
 using Repositories.Models;
 using Services;
 using System;
@@ -14,13 +17,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
 
 namespace FlashCardLearn.ViewModel
 {
-    public class LearnViewModel : INotifyPropertyChanged, ICloseWindows
+    public class LearnViewModel : ViewModelBase, ICloseWindows
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
         private FlashCardSet _currentFlashCardSet;
         private ObservableCollection<FlashCard> _currentFlashCards;
         private FlashCard _shownFlashCard;
@@ -32,12 +33,19 @@ namespace FlashCardLearn.ViewModel
         private FlashCardSetService _flashCardSetService;
         public Action Close { get; set; }
 
-        public LearnViewModel() 
+        public LearnViewModel(FlashCardSet selectedFlashCardSet, NavigationStore navigationStore) 
         {
             _flashCardService = new FlashCardService();
             _flashCardSetService = new FlashCardSetService();
+            _currentFlashCardSet = selectedFlashCardSet;
+            CurrentFlashCardSet = _currentFlashCardSet;
+            BackToFlashCardManagerView = new NavigateCommand(new NavigationService(navigationStore, () => new FlashCardManagerViewModel(selectedFlashCardSet, false, navigationStore)));
+            ForwardCommand = new ForwardCommand(this);
+            BackCommand = new BackCommand(this);
         }
         
+        public ICommand BackToFlashCardManagerView { get; }
+
         public FlashCardSet CurrentFlashCardSet
         {
             get => _currentFlashCardSet;
@@ -113,23 +121,8 @@ namespace FlashCardLearn.ViewModel
 
         public bool IsAnswerVisible => !IsQuestionVisible;
 
-        public ICommand ForwardCommand
-        {
-            get
-            {
-                if(_forwardCommand == null)
-                {
-                    _forwardCommand = new RelayCommand(Forward, CanForward);
-                }
-                return _forwardCommand;
-            }
-        }
+        public ICommand ForwardCommand { get; }
 
-        private bool CanForward(object obj)
-        {
-            return true;
-
-        }
 
         private void Forward(object obj)
         {
@@ -147,51 +140,10 @@ namespace FlashCardLearn.ViewModel
             IsQuestionVisible = true;
         }
 
-        public ICommand BackCommand
-        {
-            get
-            {
-                if(_backCommand == null)
-                {
-                    _backCommand = new RelayCommand(Back, CanBack);
-                }
-                return _backCommand;
-            }
-        }
+        public ICommand BackCommand { get; }
 
-        public bool CanBack(object obj)
-        {
-            if(Progress.Value == 0)
-            {
-                return false;
-            }
-            return true;
-        }
 
-        public void Back(object obj)
-        {
-            Progress--;
-            ShownFlashCard = _currentFlashCards[Progress.Value];
-            IsQuestionVisible = true;
-        }
-
-        public ICommand FlipCommand 
-        {
-            get
-            {
-                if(_flipCommand == null)
-                {
-                    _flipCommand = new RelayCommand(Flip, CanFlip);
-                }
-                return _flipCommand;
-            }
-
-        }
-
-        private bool CanFlip(object obj)
-        {
-            return true;
-        }
+        public ICommand FlipCommand;
 
         private void Flip(object obj)
         {
@@ -203,11 +155,6 @@ namespace FlashCardLearn.ViewModel
             //Update progress when close
             _flashCardSetService.UpdateAsync(_currentFlashCardSet);
             return true;
-        }
-
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

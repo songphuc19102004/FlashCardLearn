@@ -20,7 +20,7 @@ namespace FlashCardLearn.Views
     /// <summary>
     /// Interaction logic for LearnView.xaml
     /// </summary>
-    public partial class LearnView : Window
+    public partial class LearnView : UserControl
     {
         private List<string> quotes = new List<string>()
         {
@@ -44,23 +44,6 @@ namespace FlashCardLearn.Views
         {
             InitializeComponent();
             Random rand = new Random();
-            this.Title = quotes[rand.Next(0, 13)];
-            Loaded += LearnView_Loaded;
-        }
-
-        private void LearnView_Loaded(object sender, RoutedEventArgs e)
-        {
-            if(this.DataContext is ICloseWindows learnViewModel)
-            {
-                learnViewModel.Close += () =>
-                {
-                    this.Close();
-                };
-                Closing += (s, e) =>
-                {
-                    e.Cancel = !learnViewModel.CanClose();
-                };
-            }
         }
     }
 }

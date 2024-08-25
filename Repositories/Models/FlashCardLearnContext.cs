@@ -24,7 +24,7 @@ public partial class FlashCardLearnContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Data Source=PHUC\\PHUC;Initial Catalog=FlashCardLearn;User ID=sa;Password=123456789;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
+        optionsBuilder.UseSqlite("Data Source=Database.db");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

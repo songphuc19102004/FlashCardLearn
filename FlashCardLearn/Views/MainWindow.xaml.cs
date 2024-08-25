@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace FlashCardLearn.Views
 {
     /// <summary>
-    /// Interaction logic for SettingsView.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class SettingsView : Window
+    public partial class MainWindow : Window
     {
-        public SettingsView()
+        public MainWindow()
         {
             InitializeComponent();
         }

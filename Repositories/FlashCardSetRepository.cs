@@ -29,9 +29,10 @@ namespace Repositories
             return await SaveChangesAsync();
         }
 
-        private async Task<bool> SaveChangesAsync()
+        public async Task<bool> CreateFlashCardSet(FlashCardSet flashCardSet)
         {
-            return await _context.SaveChangesAsync() > 0;
+            _context.FlashCardSets.Add(flashCardSet);
+            return await SaveChangesAsync();
         }
 
         public async Task<int> GetFlashCardCountForSetAsync(int flashcardsetId)
@@ -39,6 +40,10 @@ namespace Repositories
             return await _context.FlashCards
                 .Where(fc => fc.FlashcardsetId == flashcardsetId)
                 .CountAsync();
+        }
+        private async Task<bool> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

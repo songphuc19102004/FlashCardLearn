@@ -1,4 +1,7 @@
-﻿using FlashCardLearn.Views;
+﻿using FlashCardLearn.Commands;
+using FlashCardLearn.Services;
+using FlashCardLearn.Stores;
+using FlashCardLearn.Views;
 using Repositories.Models;
 using Services;
 using System;
@@ -16,26 +19,39 @@ using System.Windows.Input;
 
 namespace FlashCardLearn.ViewModel
 {
-    public class FlashCardManagerViewModel : INotifyPropertyChanged
+    public class FlashCardManagerViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-        private FlashCardSet _selectedFlashCardSet;
-        private ObservableCollection<FlashCard> _flashCards;
+        private int _numberOfFlashCards;
         private FlashCardService _flashCardService;
         private FlashCardSetService _flashCardSetService;
-        private ICommand _editCommand;
-        private ICommand _deleteCommand;
-        private ICommand _learnCommand;
-        private bool _isCreateWindow;
+        private bool _isCreate;
+        public ICommand ExportFlashCardCommand { get; }
+        public ICommand CreateCommand { get; }
+        public ICommand EditCommand { get; }
+        public ICommand DeleteCommand { get; }
+        public ICommand LearnCommand { get; }
+        public ICommand AutoSaveCommand { get; }
+        public ICommand OpenFlashCardCommand { get; }
         public Action Close { get; set; }
 
-        public FlashCardManagerViewModel()
+        public FlashCardManagerViewModel(FlashCardSet selectedFlashCardSet, bool IsCreate, NavigationStore navigationStore)
         {
             _flashCardService = new FlashCardService();
             _flashCardSetService = new FlashCardSetService();
-            _isCreateWindow = false;
+            _selectedFlashCardSet = selectedFlashCardSet;
+            SelectedFlashCardSet = _selectedFlashCardSet;
+            _isCreate = IsCreate;
+            ExportFlashCardCommand = new ExportFlashCardCommand(this);
+            LearnCommand = new LearnCommand(navigationStore, this);
+            BackToHomeViewCommand = new NavigateCommand(new NavigationService(navigationStore, () => new HomeViewModel(navigationStore)));
+            CreateCommand = new CreateCommand(navigationStore, this);
+            AutoSaveCommand = new AutoSaveCommand();
+            OpenFlashCardCommand = new OpenCreateFlashCardViewCommand(navigationStore, selectedFlashCardSet);
         }
 
+        public ICommand BackToHomeViewCommand { get; }
+
+        private FlashCardSet _selectedFlashCardSet;
         public FlashCardSet SelectedFlashCardSet
         {
             get => _selectedFlashCardSet;
@@ -47,6 +63,18 @@ namespace FlashCardLearn.ViewModel
             }
         }
 
+        public String Title
+        {
+            get => _selectedFlashCardSet.Title;
+            set
+            {
+                _selectedFlashCardSet.Title = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private ObservableCollection<FlashCard> _flashCards;
         public ObservableCollection<FlashCard> FlashCards
         {
             get => _flashCards;
@@ -57,126 +85,20 @@ namespace FlashCardLearn.ViewModel
             }
         }
 
-        public bool IsVisibleLearn
+        public bool IsCreate
         {
-            get
-            {
-                if(_isCreateWindow || _flashCards.Count == 0)
-                {
-                    return false;
-                }
-                return true;
-            }
-        }
-
-        public bool IsVisibleCreate
-        {
-            get
-            {
-                return !IsVisibleLearn;
-            }
-        }
-
-        public bool IsVisibleExport
-        {
-            get
-            {
-                return IsVisibleLearn;
-            }
-        }
-
-        public bool IsCreateWindow
-        {
-            get 
-            {
-                return _isCreateWindow;
-            }
+            get => _isCreate;
             set
             {
-                _isCreateWindow = value;
+                _isCreate = value;
+                OnPropertyChanged();
             }
         }
 
-
-        #region Edit
-        public ICommand EditCommand
+        public bool IsLearn
         {
-            get
-            {
-                if( _editCommand == null)
-                {
-                    _editCommand = new RelayCommand(Edit, CanEdit);
-                }
-                return _editCommand;
-            }
+            get => !_isCreate;
         }
-
-        private bool CanEdit(object obj)
-        {
-            return true;
-        }
-
-        private void Edit(object obj) 
-        {
-            MessageBox.Show("Edit");
-        }
-        #endregion
-
-        #region Delete
-        public ICommand DeleteCommand
-        {
-            get
-            {
-                if(_deleteCommand == null)
-                {
-                    _deleteCommand = new RelayCommand(Delete, CanDelete);
-                }
-                return _deleteCommand;
-            }
-        }
-
-        private bool CanDelete(object obj)
-        {
-            return true;
-        }
-
-        private void Delete(object obj) 
-        {
-            MessageBox.Show("Del");
-        }
-        #endregion
-
-        #region Learn
-        public ICommand LearnCommand
-        {
-            get
-            {
-                if(_learnCommand == null)
-                {
-                    _learnCommand = new RelayCommand(Learn, CanLearn);
-                }
-                return _learnCommand;
-            }
-        }
-
-        private bool CanLearn(object obj)
-        {
-            return true;
-        }
-
-        private void Learn(object obj)
-        {
-            var learnViewModel = new LearnViewModel();
-            learnViewModel.CurrentFlashCardSet = _selectedFlashCardSet;
-            var managerWindow = obj as Window;
-            managerWindow.Close();
-
-            LearnView learnView = new LearnView();
-            learnView.DataContext = learnViewModel;
-            learnView.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            learnView.ShowDialog();
-        }
-        #endregion
 
         private void InitializeFlashCards()
         {
@@ -185,11 +107,5 @@ namespace FlashCardLearn.ViewModel
                 _flashCards = new ObservableCollection<FlashCard>(_flashCardService.GetFlashCardsBySetId(_selectedFlashCardSet.Id));
             }
         }
-
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Repositories;
 using Repositories.Models;
 using System.Collections;
 using System.Collections.ObjectModel;
@@ -22,6 +23,11 @@ namespace Services
         public ObservableCollection<FlashCard> GetFlashCardsBySetId(int id)
         {
             return _flashCardRepository.GetFlashCardsBySetId(id);
+        }
+
+        public async Task<bool> CreateFlashCard(FlashCard flashCard)
+        {
+            return await _flashCardRepository.CreateFlashCard(flashCard);
         }
     }
 }

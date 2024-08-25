@@ -27,5 +27,16 @@ namespace Repositories
             var result = _context.FlashCards.Where(fc => fc.FlashcardsetId == id);
             return new ObservableCollection<FlashCard>(result);
         }
+
+        public async Task<bool> CreateFlashCard(FlashCard flashCard)
+        {
+            _context.FlashCards.Add(flashCard);
+            return await SaveChangesAsync();
+        }
+
+        private async Task<bool> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

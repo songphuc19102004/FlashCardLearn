@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace FlashCardLearn.Views
 {
     /// <summary>
-    /// Interaction logic for CreateFlashCardView.xaml
+    /// Interaction logic for ImportView.xaml
     /// </summary>
-    public partial class CreateFlashCardView : UserControl
+    public partial class ImportView : UserControl
     {
-        public CreateFlashCardView()
+        public ImportView()
         {
             InitializeComponent();
         }

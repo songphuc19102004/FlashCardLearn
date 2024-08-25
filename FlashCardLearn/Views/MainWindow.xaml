@@ -26,8 +26,8 @@
             <DataTemplate DataType="{x:Type vms:SettingViewModel}">
                 <views:SettingView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:CreateFlashCardViewModel}">
-                <views:CreateFlashCardView/>
+            <DataTemplate DataType="{x:Type vms:SaveFlashCardViewModel}">
+                <views:SaveFlashCardView/>
             </DataTemplate>
         </Grid.Resources>
         <ContentControl Content="{Binding CurrentViewModel}"></ContentControl>

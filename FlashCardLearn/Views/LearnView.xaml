@@ -45,11 +45,11 @@
             <RowDefinition Height="0.15*"></RowDefinition>
             
         </Grid.RowDefinitions>
-        <Button Style="{StaticResource ButtonStyle}" FontSize="20" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Command="{Binding BackToFlashCardManagerView}" Margin="10 10 0 0">
+        <Button Style="{StaticResource ButtonStyle}" FontSize="20" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Command="{Binding BackAndSaveProgressCommand}" CommandParameter="{Binding CurrentFlashCardSet}" Margin="10 10 0 0">
             <Image Source="/Resources/Images/back_icon.png"></Image>
         </Button>
         <!-- Card content -->
-        <Button Command="{Binding FlipCommand}" Cursor="Hand"
+        <Button Command="{Binding FlipCardCommand}" Cursor="Hand"
             Background="#6D9886" 
             Margin="40" 
             BorderThickness="0">

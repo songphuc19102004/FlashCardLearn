@@ -73,12 +73,12 @@
                 <TextBox Style="{StaticResource TextBoxStyle}" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </Border>
             <!--Learn button-->
-            <Button Grid.Column="2" Content="Learn!" Style="{StaticResource ButtonStyle}" Margin="100 130" Command="{Binding LearnCommand}" Visibility="{Binding IsLearn, Converter={StaticResource BooleanToVisibilityConverter}}"></Button>
+            <Button Grid.Column="2" Content="Learn!" Style="{StaticResource ButtonStyle}" Margin="100 130" Command="{Binding LearnCommand}" Visibility="{Binding IsLearn, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"></Button>
 
             <!--Create button-->
-            <Button Grid.Column="2" Content="Create!" Style="{StaticResource ButtonStyle}" Margin="100 130" Command="{Binding CreateCommand}" Visibility="{Binding IsCreate, Converter={StaticResource BooleanToVisibilityConverter}}"></Button>
+            <Button Grid.Column="2" Content="Create!" Style="{StaticResource ButtonStyle}" Margin="100 130" Command="{Binding ExecuteCreateSetCommand}" Visibility="{Binding IsCreate, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"></Button>
 
-            <Button Grid.Column="2" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Command="{Binding OpenFlashCardCommand}" Margin="0 0 20 0">
+            <Button Grid.Column="2" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Command="{Binding OpenCreateFlashCardViewCommand}" Margin="0 0 20 0">
                 <Image Source="/Resources/Images/add_icon.png"/>
             </Button>
 
@@ -92,8 +92,9 @@
                 <StackPanel HorizontalAlignment="Center">
                     <Button Content="Import" Style="{StaticResource ButtonStyle}" FontSize="20" Width="auto" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left"></Button>
                     <Button Content="Export" Style="{StaticResource ButtonStyle}" Command="{Binding ExportFlashCardCommand}" FontSize="20" Width="auto" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left"></Button>
+                    <Button Content="Exam" Style="{StaticResource ButtonStyle}" Command="{Binding NavigateExamView}" FontSize="20" Width="auto" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left"></Button>
+                    <Button Content="Delete" Style="{StaticResource ButtonStyle}" Command="{Binding DeleteFlashCardSetCommand}" FontSize="20" Width="auto" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding IsLearn, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"></Button>
                 </StackPanel>
-
             </StackPanel>
             <!--Left panel-->
             
@@ -119,18 +120,18 @@
             </DataGrid.CellStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Question" Binding="{Binding Path=Question}" MaxWidth="850"></DataGridTextColumn>
-                <DataGridTextColumn Header="Answer" Binding="{Binding Path=Answer}" MaxWidth="500"></DataGridTextColumn>
+                <DataGridTextColumn Header="Answer" Binding="{Binding Path=Answer}" MaxWidth="380"></DataGridTextColumn>
                 <DataGridTemplateColumn Header="Actions">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Button Content="Edit" Foreground="#393E46" 
-                                Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" 
+                                Command="{Binding DataContext.NavigateEditViewCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" 
                                 CommandParameter="{Binding}" 
                                 Style="{StaticResource DataGridButtonStyle}" 
                                 Margin="5"/>
                                 <Button Content="Delete" Foreground="#393E46"
-                                Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" 
+                                Command="{Binding DataContext.DeleteFlashCardCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" 
                                 CommandParameter="{Binding}" 
                                 Style="{StaticResource DataGridButtonStyle}" 
                                 Margin="5"/>

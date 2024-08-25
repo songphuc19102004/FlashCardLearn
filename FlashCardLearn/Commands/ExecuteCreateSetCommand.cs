@@ -13,11 +13,11 @@ using System.Windows;
 
 namespace FlashCardLearn.Commands
 {
-    public class CreateCommand : CommandBase
+    public class ExecuteCreateSetCommand : CommandBase
     {
         private readonly FlashCardManagerViewModel _flashCardManagerViewModel;
         private readonly NavigationStore _navigationStore;
-        public CreateCommand(NavigationStore navigationStore, FlashCardManagerViewModel flashCardManagerViewModel) 
+        public ExecuteCreateSetCommand(NavigationStore navigationStore, FlashCardManagerViewModel flashCardManagerViewModel) 
         {
             _flashCardManagerViewModel = flashCardManagerViewModel;
             _navigationStore = navigationStore;
@@ -33,10 +33,16 @@ namespace FlashCardLearn.Commands
 
             return true && base.CanExecute(parameter);
         }
-        public override void Execute(object? parameter)
+        public override async void Execute(object? parameter)
         {
-            //FlashCardSetService flashCardSetService = new FlashCardSetService();
-            //flashCardSetService.
+            FlashCardSetService flashCardSetService = new();
+            await flashCardSetService.CreateFlashCardSet(new FlashCardSet
+            {
+                Title = _flashCardManagerViewModel.Title,
+                FlashCards = _flashCardManagerViewModel.FlashCards
+            });
+            _flashCardManagerViewModel.IsCreate = false;
+            _flashCardManagerViewModel.IsLearn = true;
         }
 
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

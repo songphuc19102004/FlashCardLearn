@@ -1,4 +1,5 @@
-﻿using Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Repositories;
 using Repositories.Models;
 using System.Collections;
 using System.Security.Principal;
@@ -26,6 +27,14 @@ namespace Services
         public async Task<int> GetFlashCardCountForSetAsync(int flashcardsetId)
         {
             return await _flashCardSetRepository.GetFlashCardCountForSetAsync(flashcardsetId);
+        }
+        public async Task<bool> CreateFlashCardSet(FlashCardSet flashCardSet)
+        {
+            return await _flashCardSetRepository.CreateFlashCardSet(flashCardSet);
+        }
+        public async Task<bool> RemoveFlashCardSetAsync(int flashcardsetId)
+        {
+            return await _flashCardSetRepository.RemoveFlashCardSetAsync(flashcardsetId);
         }
     }
 }

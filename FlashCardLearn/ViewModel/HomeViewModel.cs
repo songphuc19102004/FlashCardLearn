@@ -34,7 +34,7 @@ namespace FlashCardLearn.ViewModel
             _flashCardSetService = new FlashCardSetService();
             OpenFlashCardSetCommand = new OpenFlashCardCommand(this, navigationStore);
             OpenSettingCommand = new NavigateCommand(new NavigationService(navigationStore, () => new SettingViewModel()));
-            CreateFlashCardSetCommand = new NavigateCommand(new NavigationService(navigationStore, () => new FlashCardManagerViewModel(new FlashCardSet()
+            NavigateCreateViewCommand = new NavigateCommand(new NavigationService(navigationStore, () => new FlashCardManagerViewModel(new FlashCardSet()
             {
                 Title = "Enter your set name",
                 Description = "Enter your description"
@@ -42,7 +42,7 @@ namespace FlashCardLearn.ViewModel
             InitializeAsync();
         }
 
-        public ICommand CreateFlashCardSetCommand { get; }
+        public ICommand NavigateCreateViewCommand { get; }
         public ICommand OpenSettingCommand { get; }
         public ICommand OpenFlashCardSetCommand { get; }
 

@@ -25,9 +25,6 @@ namespace FlashCardLearn.ViewModel
         private FlashCardSet _currentFlashCardSet;
         private ObservableCollection<FlashCard> _currentFlashCards;
         private FlashCard _shownFlashCard;
-        private ICommand _forwardCommand;
-        private ICommand _backCommand;
-        private ICommand _flipCommand;
         private bool _isQuestionVisible = true;
         private FlashCardService _flashCardService;
         private FlashCardSetService _flashCardSetService;
@@ -39,12 +36,13 @@ namespace FlashCardLearn.ViewModel
             _flashCardSetService = new FlashCardSetService();
             _currentFlashCardSet = selectedFlashCardSet;
             CurrentFlashCardSet = _currentFlashCardSet;
-            BackToFlashCardManagerView = new NavigateCommand(new NavigationService(navigationStore, () => new FlashCardManagerViewModel(selectedFlashCardSet, false, navigationStore)));
             ForwardCommand = new ForwardCommand(this);
             BackCommand = new BackCommand(this);
+            FlipCardCommand = new FlipCardCommand(this);
+            BackAndSaveProgressCommand = new BackAndSaveProgressCommand(navigationStore);
         }
         
-        public ICommand BackToFlashCardManagerView { get; }
+        public ICommand BackAndSaveProgressCommand { get; }
 
         public FlashCardSet CurrentFlashCardSet
         {
@@ -123,32 +121,9 @@ namespace FlashCardLearn.ViewModel
 
         public ICommand ForwardCommand { get; }
 
-
-        private void Forward(object obj)
-        {
-            if(Progress < _currentFlashCards.Count - 1)
-            {
-                Progress++;
-                ShownFlashCard = _currentFlashCards[Progress.Value];
-            }
-            else
-            {
-                SoundPlayer soundPlayer = new SoundPlayer(@"C:\Users\Phuc\Desktop\repo2\FlashCardLearn\FlashCardLearn\Resources\Sounds\children_yay.wav");
-                soundPlayer.Play();
-                MessageBox.Show("Congratulations!, You have finished this flash card set!", "Congrats", MessageBoxButton.OK);
-            }
-            IsQuestionVisible = true;
-        }
-
         public ICommand BackCommand { get; }
 
-
-        public ICommand FlipCommand;
-
-        private void Flip(object obj)
-        {
-            IsQuestionVisible = !IsQuestionVisible;
-        }
+        public ICommand FlipCardCommand { get; }
 
         public bool CanClose()
         {

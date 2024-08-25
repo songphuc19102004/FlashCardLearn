@@ -62,7 +62,7 @@
                     </Grid.ColumnDefinitions>
                     <!--Search box-->
                     <TextBox Grid.Column="0" Width="200" Height="20" HorizontalAlignment="Left" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                    <Button Grid.Column="1" Width="30" Height="30" HorizontalAlignment="Right" Command="{Binding CreateFlashCardSetCommand}">
+                    <Button Grid.Column="1" Width="30" Height="30" HorizontalAlignment="Right" Command="{Binding NavigateCreateViewCommand}">
                         <Image Source="/Resources/Images/add_icon.png"/>
                     </Button>
                 </Grid>
@@ -111,7 +111,6 @@
             <!-- Content for each row -->
             <TextBlock Style="{StaticResource TextStyle}" Foreground="#F2E7D5" Grid.Row="0">Menu</TextBlock>
             <Button Style="{StaticResource ButtonStyle}" Grid.Row="1">Focus</Button>
-            <Button Style="{StaticResource ButtonStyle}" Grid.Row="2">Exam</Button>
             <Button Style="{StaticResource ButtonStyle}" FontSize="20" Grid.Row="5" Command="{Binding OpenSettingCommand}">Settings</Button>
         </Grid>
         <!-- Separate line -->

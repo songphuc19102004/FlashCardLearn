@@ -25,12 +25,13 @@ namespace FlashCardLearn.Commands
             {
                 _learnViewModel.Progress++;
                 _learnViewModel.ShownFlashCard = _learnViewModel.CurrentFlashCards[_learnViewModel.Progress.Value];
+                _learnViewModel.IsQuestionVisible = true;
             }
             else
             {
                 SoundPlayer soundPlayer = new SoundPlayer(@"C:\Users\Phuc\Desktop\repo2\FlashCardLearn\FlashCardLearn\Resources\Sounds\children_yay.wav");
                 soundPlayer.Play();
-                MessageBox.Show("Congratulations!, You have finished this flash card set!", "Congrats", MessageBoxButton.OK);
+                MessageBox.Show("Congratulations!, You have finished this flash card set!", "Congrats", MessageBoxButton.OK, MessageBoxImage.Asterisk);
             }
         }
     }

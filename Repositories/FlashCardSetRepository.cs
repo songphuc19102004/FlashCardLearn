@@ -41,6 +41,13 @@ namespace Repositories
                 .Where(fc => fc.FlashcardsetId == flashcardsetId)
                 .CountAsync();
         }
+        public async Task<bool> RemoveFlashCardSetAsync(int flashcardsetId)
+        {
+            var found = await _context.FlashCardSets.FirstOrDefaultAsync(fcs => fcs.Id == flashcardsetId);
+            _context.FlashCardSets.Remove(found);
+            return await SaveChangesAsync();
+        }
+
         private async Task<bool> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync() > 0;

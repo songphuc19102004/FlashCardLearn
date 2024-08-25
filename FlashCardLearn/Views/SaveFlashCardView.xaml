@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="FlashCardLearn.Views.CreateFlashCardView"
+﻿<UserControl x:Class="FlashCardLearn.Views.SaveFlashCardView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -67,12 +67,12 @@
         <StackPanel Grid.Column="1">
             <TextBlock Style="{StaticResource TextStyle}" Text="Give birth to your flashcard"></TextBlock>
             <Label Style="{StaticResource LabelStyle}" Content="Question"></Label>
-            <TextBox Style="{StaticResource TextBoxStyle}" Width="660" Height="100" Text="{Binding Question, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Style="{StaticResource TextBoxStyle}" Width="660" Height="100" Text="{Binding Question, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True"></TextBox>
             
             <Label Style="{StaticResource LabelStyle}" Content="Awnser"></Label>
-            <TextBox Style="{StaticResource TextBoxStyle}" Width="660" Height="100" Text="{Binding Awnser, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Style="{StaticResource TextBoxStyle}" Width="660" Height="100" Text="{Binding Awnser, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True"></TextBox>
 
-            <Button Style="{StaticResource ButtonStyle}" Content="Create!" Margin="0 20 0 0" Width="150" Command="{Binding ExecuteCreateFlashCardCommand}"></Button>
+            <Button Style="{StaticResource ButtonStyle}" Content="Save!" Margin="0 20 0 0" Width="150" Command="{Binding SaveFlashCardCommand}"></Button>
         </StackPanel>
     </Grid>
     

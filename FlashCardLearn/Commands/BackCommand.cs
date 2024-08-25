@@ -22,6 +22,7 @@ namespace FlashCardLearn.Commands
             {
                 _learnViewModel.Progress--;
                 _learnViewModel.ShownFlashCard = _learnViewModel.CurrentFlashCards[_learnViewModel.Progress.Value];
+                _learnViewModel.IsQuestionVisible = true;
             }
         }
     }

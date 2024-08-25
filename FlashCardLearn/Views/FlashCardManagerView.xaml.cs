@@ -31,7 +31,7 @@ namespace FlashCardLearn.Views
 
         private void InfoButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("You can add/edit/delete flash card by using the grid below", "Guide", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("You will have to create the flash card set before adding flash cards", "Guide", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

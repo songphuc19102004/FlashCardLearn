@@ -23,30 +23,33 @@ namespace FlashCardLearn.ViewModel
     {
         private int _numberOfFlashCards;
         private FlashCardService _flashCardService;
-        private FlashCardSetService _flashCardSetService;
         private bool _isCreate;
+        private bool _isLearn;
         public ICommand ExportFlashCardCommand { get; }
-        public ICommand CreateCommand { get; }
-        public ICommand EditCommand { get; }
-        public ICommand DeleteCommand { get; }
+        public ICommand ExecuteCreateSetCommand { get; }
+        public ICommand DeleteFlashCardSetCommand { get; }
+        public ICommand DeleteFlashCardCommand { get; }
         public ICommand LearnCommand { get; }
         public ICommand AutoSaveCommand { get; }
-        public ICommand OpenFlashCardCommand { get; }
+        public ICommand OpenCreateFlashCardViewCommand { get; }
+        public ICommand NavigateEditViewCommand { get; }
         public Action Close { get; set; }
 
         public FlashCardManagerViewModel(FlashCardSet selectedFlashCardSet, bool IsCreate, NavigationStore navigationStore)
         {
             _flashCardService = new FlashCardService();
-            _flashCardSetService = new FlashCardSetService();
             _selectedFlashCardSet = selectedFlashCardSet;
             SelectedFlashCardSet = _selectedFlashCardSet;
             _isCreate = IsCreate;
+            _isLearn = !_isCreate;
             ExportFlashCardCommand = new ExportFlashCardCommand(this);
             LearnCommand = new LearnCommand(navigationStore, this);
             BackToHomeViewCommand = new NavigateCommand(new NavigationService(navigationStore, () => new HomeViewModel(navigationStore)));
-            CreateCommand = new CreateCommand(navigationStore, this);
-            AutoSaveCommand = new AutoSaveCommand();
-            OpenFlashCardCommand = new OpenCreateFlashCardViewCommand(navigationStore, selectedFlashCardSet);
+            ExecuteCreateSetCommand = new ExecuteCreateSetCommand(navigationStore, this);
+            OpenCreateFlashCardViewCommand = new OpenCreateFlashCardViewCommand(navigationStore, this);
+            DeleteFlashCardSetCommand = new DeleteFlashCardSetCommand(navigationStore, selectedFlashCardSet);
+            DeleteFlashCardCommand = new DeleteFlashCardCommand(this);
+            NavigateEditViewCommand = new NavigateEditViewCommand(selectedFlashCardSet, navigationStore);
         }
 
         public ICommand BackToHomeViewCommand { get; }
@@ -63,7 +66,7 @@ namespace FlashCardLearn.ViewModel
             }
         }
 
-        public String Title
+        public string Title
         {
             get => _selectedFlashCardSet.Title;
             set
@@ -87,7 +90,10 @@ namespace FlashCardLearn.ViewModel
 
         public bool IsCreate
         {
-            get => _isCreate;
+            get
+            {
+                return _isCreate;
+            }
             set
             {
                 _isCreate = value;
@@ -97,7 +103,12 @@ namespace FlashCardLearn.ViewModel
 
         public bool IsLearn
         {
-            get => !_isCreate;
+            get => _isLearn;
+            set
+            {
+                _isLearn = value;
+                OnPropertyChanged();
+            }
         }
 
         private void InitializeFlashCards()

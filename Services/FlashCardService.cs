@@ -29,5 +29,20 @@ namespace Services
         {
             return await _flashCardRepository.CreateFlashCard(flashCard);
         }
+
+        public async Task<bool> RemoveFlashCard(int id)
+        {
+            return await _flashCardRepository.RemoveFlashCardAsync(id);
+        }
+
+        public async Task<bool> RemoveFlashCardOfSetAsync(int setId)
+        {
+            return await _flashCardRepository.RemoveFlashCardOfSetAsync(setId);
+        }
+
+        public async Task<bool> UpdateAsync(FlashCard flashCard)
+        {
+            return await _flashCardRepository.UpdateAsync(flashCard);
+        }
     }
 }

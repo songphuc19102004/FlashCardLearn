@@ -34,6 +34,26 @@ namespace Repositories
             return await SaveChangesAsync();
         }
 
+        public async Task<bool> RemoveFlashCardAsync(int id)
+        {
+            var found = await _context.FlashCards.FirstOrDefaultAsync(fc => fc.Id == id);
+            _context.FlashCards.Remove(found);
+            return await SaveChangesAsync();
+        }
+
+        public async Task<bool> RemoveFlashCardOfSetAsync(int setId)
+        {
+            var found = _context.FlashCards.Where(fc => fc.FlashcardsetId == setId);
+            _context.FlashCards.RemoveRange(found);
+            return await SaveChangesAsync();
+        }
+
+        public async Task<bool> UpdateAsync(FlashCard flashCard)
+        {
+            _context.Entry(flashCard).State = EntityState.Modified;
+            return await SaveChangesAsync();
+        }
+
         private async Task<bool> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync() > 0;

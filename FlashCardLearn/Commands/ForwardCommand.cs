@@ -3,6 +3,7 @@ using Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Media;
 using System.Text;
@@ -31,8 +32,11 @@ namespace FlashCardLearn.Commands
             }
             else
             {
-                SoundPlayer soundPlayer = new SoundPlayer(FinishingSoundFilePath);
-                soundPlayer.Play();
+                if(File.Exists(FinishingSoundFilePath))
+                {
+                    SoundPlayer soundPlayer = new SoundPlayer(FinishingSoundFilePath);
+                    soundPlayer.Play();
+                }
                 MessageBox.Show("Congratulations!, You have finished this flash card set!", "Congrats", MessageBoxButton.OK, MessageBoxImage.Asterisk);
             }
         }

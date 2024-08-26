@@ -34,7 +34,6 @@ namespace FlashCardLearn.Commands
         }
         private void OnViewModelChanged(object? sender, PropertyChangedEventArgs e)
         {
-            var a = e.PropertyName;
         }
     }
 }

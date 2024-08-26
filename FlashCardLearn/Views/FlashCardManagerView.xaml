@@ -56,6 +56,13 @@
             </Style.Triggers>
             <Setter Property="Background" Value="Yellow"/>
         </Style>
+        <Style x:Key="MenuStyle" TargetType="Menu">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Foreground" Value="#F2E7D5"/>
+            <Setter Property="Width" Value="auto"/>
+        </Style>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
     </UserControl.Resources>
     <Grid>
@@ -90,10 +97,26 @@
                 </Button>
                 <TextBlock Style="{StaticResource TextStyle}" Text="Options"></TextBlock>
                 <StackPanel HorizontalAlignment="Center">
-                    <Button Content="Import" Style="{StaticResource ButtonStyle}" FontSize="20" Width="auto" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left"></Button>
-                    <Button Content="Export" Style="{StaticResource ButtonStyle}" Command="{Binding ExportFlashCardCommand}" FontSize="20" Width="auto" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left"></Button>
-                    <Button Content="Exam" Style="{StaticResource ButtonStyle}" Command="{Binding NavigateExamView}" FontSize="20" Width="auto" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left"></Button>
-                    <Button Content="Delete" Style="{StaticResource ButtonStyle}" Command="{Binding DeleteFlashCardSetCommand}" FontSize="20" Width="auto" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding IsLearn, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"></Button>
+                    <Menu Style="{StaticResource MenuStyle}" IsEnabled="{Binding CanOptions}">
+                        <MenuItem Header="Import" Background="Transparent">
+                            <MenuItem Header="From Quizlet" Foreground="#393E46" Command="{Binding NavigateImportView}" IsEnabled="False">
+                                <MenuItem.Icon>
+                                    <Image Source="/Resources/Images/quizlet_icon.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="From File" Foreground="#393E46" Command="{Binding ImportCommand}">
+                                <MenuItem.Icon>
+                                    <Image Source="/Resources/Images/file_icon.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </MenuItem>
+                    </Menu>
+
+                    <Button Content="Export" Style="{StaticResource ButtonStyle}" Command="{Binding ExportCommand}" IsEnabled="{Binding CanOptions}" FontSize="20" Width="auto" Height="50" VerticalAlignment="Top"></Button>
+
+                    <Button Content="Exam" Style="{StaticResource ButtonStyle}" Command="{Binding NavigateExamView}" IsEnabled="{Binding CanOptions}" FontSize="20" Width="auto" Height="50" VerticalAlignment="Top"></Button>
+                    
+                    <Button Content="Delete" Style="{StaticResource ButtonStyle}" Command="{Binding DeleteFlashCardSetCommand}" FontSize="20" Width="auto" Height="50" VerticalAlignment="Top" Visibility="{Binding IsLearn, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"></Button>
                 </StackPanel>
             </StackPanel>
             <!--Left panel-->

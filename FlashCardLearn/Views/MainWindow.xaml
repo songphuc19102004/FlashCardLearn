@@ -29,6 +29,9 @@
             <DataTemplate DataType="{x:Type vms:SaveFlashCardViewModel}">
                 <views:SaveFlashCardView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:ImportViewModel}">
+                <views:ImportView/>
+            </DataTemplate>
         </Grid.Resources>
         <ContentControl Content="{Binding CurrentViewModel}"></ContentControl>
     </Grid>

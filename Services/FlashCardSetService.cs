@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Repositories.Models;
+using Services.DTOs;
 using System.Collections;
 using System.Security.Principal;
 
@@ -28,7 +29,7 @@ namespace Services
         {
             return await _flashCardSetRepository.GetFlashCardCountForSetAsync(flashcardsetId);
         }
-        public async Task<bool> CreateFlashCardSet(FlashCardSet flashCardSet)
+        public async Task<FlashCardSet> CreateFlashCardSet(FlashCardSet flashCardSet)
         {
             return await _flashCardSetRepository.CreateFlashCardSet(flashCardSet);
         }

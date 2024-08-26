@@ -25,7 +25,8 @@ namespace FlashCardLearn.ViewModel
         private FlashCardService _flashCardService;
         private bool _isCreate;
         private bool _isLearn;
-        public ICommand ExportFlashCardCommand { get; }
+        private bool _canOption;
+        public ICommand ExportCommand { get; }
         public ICommand ExecuteCreateSetCommand { get; }
         public ICommand DeleteFlashCardSetCommand { get; }
         public ICommand DeleteFlashCardCommand { get; }
@@ -42,7 +43,8 @@ namespace FlashCardLearn.ViewModel
             SelectedFlashCardSet = _selectedFlashCardSet;
             _isCreate = IsCreate;
             _isLearn = !_isCreate;
-            ExportFlashCardCommand = new ExportFlashCardCommand(this);
+            _canOption = !_isCreate;
+            ExportCommand = new ExportCommand(this);
             LearnCommand = new LearnCommand(navigationStore, this);
             BackToHomeViewCommand = new NavigateCommand(new NavigationService(navigationStore, () => new HomeViewModel(navigationStore)));
             ExecuteCreateSetCommand = new ExecuteCreateSetCommand(navigationStore, this);
@@ -50,8 +52,11 @@ namespace FlashCardLearn.ViewModel
             DeleteFlashCardSetCommand = new DeleteFlashCardSetCommand(navigationStore, selectedFlashCardSet);
             DeleteFlashCardCommand = new DeleteFlashCardCommand(this);
             NavigateEditViewCommand = new NavigateEditViewCommand(selectedFlashCardSet, navigationStore);
+            ImportCommand = new ImportCommand(this);
+            NavigateImportView = new NavigateImportView(navigationStore, this);
         }
-
+        public ICommand NavigateImportView { get; }
+        public ICommand ImportCommand { get; }
         public ICommand BackToHomeViewCommand { get; }
 
         private FlashCardSet _selectedFlashCardSet;
@@ -111,6 +116,16 @@ namespace FlashCardLearn.ViewModel
             }
         }
 
+        public bool CanOptions
+        {
+            get => _canOption;
+            set
+            {
+                _canOption = value;
+                OnPropertyChanged();
+            }
+        }
+
         private void InitializeFlashCards()
         {
             if(_selectedFlashCardSet != null)
@@ -118,5 +133,13 @@ namespace FlashCardLearn.ViewModel
                 _flashCards = new ObservableCollection<FlashCard>(_flashCardService.GetFlashCardsBySetId(_selectedFlashCardSet.Id));
             }
         }
+
+        public void UpdateFlashCards()
+        {
+            OnPropertyChanged(nameof(FlashCards));
+            OnPropertyChanged(nameof(TotalFlashCards));
+        }
+
+        public int TotalFlashCards => FlashCards?.Count ?? 0;
     }
 }

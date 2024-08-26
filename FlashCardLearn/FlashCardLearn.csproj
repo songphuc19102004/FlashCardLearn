@@ -6,24 +6,36 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+	  <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Config\settings.json" />
     <None Remove="Resources\Images\add_icon.png" />
     <None Remove="Resources\Images\back_icon.png" />
+    <None Remove="Resources\Images\file_icon.png" />
     <None Remove="Resources\Images\flashcards.png" />
     <None Remove="Resources\Images\info.png" />
     <None Remove="Resources\Images\left_arrow.png" />
+    <None Remove="Resources\Images\quizlet_icon.png" />
     <None Remove="Resources\Images\right_arrow.png" />
     <None Remove="Resources\Sounds\children_yay.wav" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Config\settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Resources\Images\add_icon.png" />
     <Resource Include="Resources\Images\back_icon.png" />
+    <Resource Include="Resources\Images\file_icon.png" />
     <Resource Include="Resources\Images\flashcards.png" />
     <Resource Include="Resources\Images\info.png" />
     <Resource Include="Resources\Images\left_arrow.png" />
+    <Resource Include="Resources\Images\quizlet_icon.png" />
     <Resource Include="Resources\Images\right_arrow.png" />
     <Resource Include="Resources\Sounds\children_yay.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

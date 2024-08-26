@@ -1,4 +1,5 @@
 ﻿using FlashCardLearn.ViewModel;
+using Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,6 +22,7 @@ namespace FlashCardLearn.Commands
 
         public override void Execute(object? parameter)
         {
+            string FinishingSoundFilePath = SettingService.LoadSettings().FinishingSoundFilePath;
             if(_learnViewModel.Progress < _learnViewModel.CurrentFlashCards.Count - 1)
             {
                 _learnViewModel.Progress++;
@@ -29,7 +31,7 @@ namespace FlashCardLearn.Commands
             }
             else
             {
-                SoundPlayer soundPlayer = new SoundPlayer(@"C:\Users\Phuc\Desktop\repo2\FlashCardLearn\FlashCardLearn\Resources\Sounds\children_yay.wav");
+                SoundPlayer soundPlayer = new SoundPlayer(FinishingSoundFilePath);
                 soundPlayer.Play();
                 MessageBox.Show("Congratulations!, You have finished this flash card set!", "Congrats", MessageBoxButton.OK, MessageBoxImage.Asterisk);
             }

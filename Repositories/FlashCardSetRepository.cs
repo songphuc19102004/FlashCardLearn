@@ -29,10 +29,11 @@ namespace Repositories
             return await SaveChangesAsync();
         }
 
-        public async Task<bool> CreateFlashCardSet(FlashCardSet flashCardSet)
+        public async Task<FlashCardSet> CreateFlashCardSet(FlashCardSet flashCardSet)
         {
             _context.FlashCardSets.Add(flashCardSet);
-            return await SaveChangesAsync();
+            await SaveChangesAsync();
+            return flashCardSet;
         }
 
         public async Task<int> GetFlashCardCountForSetAsync(int flashcardsetId)

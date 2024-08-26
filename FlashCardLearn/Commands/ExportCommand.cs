@@ -1,4 +1,5 @@
 ﻿using FlashCardLearn.ViewModel;
+using Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,13 +11,12 @@ using System.Windows;
 
 namespace FlashCardLearn.Commands
 {
-    public class ExportFlashCardCommand : CommandBase
+    public class ExportCommand : CommandBase
     {
         private readonly FlashCardManagerViewModel _flashCardManagerViewModel;
-        public ExportFlashCardCommand(FlashCardManagerViewModel flashCardManagerViewModel)
+        public ExportCommand(FlashCardManagerViewModel flashCardManagerViewModel)
         {
             _flashCardManagerViewModel = flashCardManagerViewModel;
-            _flashCardManagerViewModel.PropertyChanged += OnViewModelPropertyChanged; 
         }
         public override bool CanExecute(object? parameter)
         {
@@ -24,12 +24,7 @@ namespace FlashCardLearn.Commands
         } 
         public override void Execute(object? parameter)
         {
-            Debug.WriteLine("Executed");
-        }
-
-        private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            
+            ImportExportHelper.ExportFlashcardListToFile(_flashCardManagerViewModel.FlashCards);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Repositories.Models;
+using Services.DTOs;
+using Services.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,7 +16,6 @@ namespace Services
 {
     public static class ImportExportHelper
     {
-
         public static List<FlashCard> QuizletImportToFlashCardList(string content)
         {
             string[] contentArray = content.Split("\r\n");
@@ -46,7 +48,8 @@ namespace Services
 
         public static void ExportFlashcardListToFile(IEnumerable<FlashCard> flashcards)
         {
-            string jsonContent = JsonSerializer.Serialize(flashcards, new JsonSerializerOptions {WriteIndented = true});
+            var dtos = flashcards.Select(fc => fc.ToFlashCardDTO());
+            string jsonContent = JsonSerializer.Serialize(dtos, new JsonSerializerOptions {WriteIndented = true});
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
                 Title = "Choose Export File Location",
@@ -71,9 +74,31 @@ namespace Services
             }
         }
 
-        public static void ImportJsonToFlashcardList()
+        public static List<FlashCardDTO> ImportJsonToFlashcardList()
         {
             //TODO:
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Title = "Choose Your Import File",
+                Filter = "JSON files (*.json)|*.json",
+                DefaultExt = "json"
+            };
+
+            if(openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+                try
+                {
+                    string jsonContent = File.ReadAllText(filePath);
+                    List<FlashCardDTO> importedFlashcards = JsonSerializer.Deserialize<List<FlashCardDTO>>(jsonContent);
+                    return importedFlashcards;
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            return null;
         }
     }
 }

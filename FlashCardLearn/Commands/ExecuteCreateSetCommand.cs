@@ -36,13 +36,15 @@ namespace FlashCardLearn.Commands
         public override async void Execute(object? parameter)
         {
             FlashCardSetService flashCardSetService = new();
-            await flashCardSetService.CreateFlashCardSet(new FlashCardSet
+            var flashCardSet = await flashCardSetService.CreateFlashCardSet(new FlashCardSet
             {
                 Title = _flashCardManagerViewModel.Title,
                 FlashCards = _flashCardManagerViewModel.FlashCards
             });
             _flashCardManagerViewModel.IsCreate = false;
             _flashCardManagerViewModel.IsLearn = true;
+            _flashCardManagerViewModel.CanOptions = true;
+            _flashCardManagerViewModel.SelectedFlashCardSet = flashCardSet;
         }
 
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

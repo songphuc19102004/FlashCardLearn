@@ -36,16 +36,22 @@
             <Setter Property="CornerRadius" Value="20"/>
         </Style>
     </UserControl.Resources>
-    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center">
-        <TextBlock Style="{StaticResource TextStyle}" Text="Settings" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10 0 0 0"/>
-        <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
-            <TextBlock Text="Finishing sound effect: " Style="{StaticResource TextStyle}" FontSize="20"></TextBlock>
-            <TextBlock Text="Exname" Style="{StaticResource TextStyle}" FontSize="20"></TextBlock>
-            <Button Content="Change" Style="{StaticResource ButtonStyle}" FontSize="20" Margin="30 0 0 0"></Button>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
-            <TextBlock Text="..." Style="{StaticResource TextStyle}" FontSize="20"></TextBlock>
-        </StackPanel>
-    </StackPanel>
+    <Grid>
+        <Button Style="{StaticResource ButtonStyle}" FontSize="20" Width="30" Height="30" Margin="10 10 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Command="{Binding BackToHomeCommand}">
+            <Image Source="/Resources/Images/back_icon.png"></Image>
+        </Button>
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center">
 
+            <TextBlock Style="{StaticResource TextStyle}" Text="Settings" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10 0 0 0"/>
+            <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
+                <TextBlock Text="Finishing sound effect: " Style="{StaticResource TextStyle}" FontSize="20"></TextBlock>
+                <TextBlock Text="{Binding FinishingSoundFileName}" Style="{StaticResource TextStyle}" FontSize="20"></TextBlock>
+                <Button Content="Change" Style="{StaticResource ButtonStyle}" FontSize="20" Margin="30 0 0 0" Command="{Binding ChangeFinishingSoundCommand}"></Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
+                <TextBlock Text="..." Style="{StaticResource TextStyle}" FontSize="20"></TextBlock>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+    
 </UserControl>

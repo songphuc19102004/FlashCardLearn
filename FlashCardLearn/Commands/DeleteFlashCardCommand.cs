@@ -18,7 +18,6 @@ namespace FlashCardLearn.Commands
         public DeleteFlashCardCommand(FlashCardManagerViewModel flashCardManagerViewModel)
         {
             _flashCardManagerViewModel = flashCardManagerViewModel;
-            _flashCardManagerViewModel.PropertyChanged += OnViewModelChanged;
         }
 
         public override async void Execute(object? parameter)
@@ -31,9 +30,10 @@ namespace FlashCardLearn.Commands
                 await flashCardService.RemoveFlashCard(flashCard.Id);
                 _flashCardManagerViewModel.FlashCards.Remove(flashCard);
             }
-        }
-        private void OnViewModelChanged(object? sender, PropertyChangedEventArgs e)
-        {
+            if(_flashCardManagerViewModel.FlashCards.Count == 0)
+            {
+                (_flashCardManagerViewModel.LearnCommand as CommandBase)?.RaiseCanExecutedChanged();
+            }
         }
     }
 }

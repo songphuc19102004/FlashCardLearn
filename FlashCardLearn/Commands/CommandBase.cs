@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows.Controls;
+using System.Windows.Input;
 
 public abstract class CommandBase: ICommand
 {
@@ -13,5 +14,10 @@ public abstract class CommandBase: ICommand
     protected void OnCanExecutedChanged()
     {
         CanExecuteChanged?.Invoke(this, new EventArgs());
+    }
+
+    public void RaiseCanExecutedChanged() 
+    {
+        OnCanExecutedChanged();
     }
 }

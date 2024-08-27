@@ -45,6 +45,7 @@ namespace FlashCardLearn.Commands
             _flashCardManagerViewModel.IsLearn = true;
             _flashCardManagerViewModel.CanOptions = true;
             _flashCardManagerViewModel.SelectedFlashCardSet = flashCardSet;
+            _flashCardManagerViewModel.DeleteFlashCardSetCommand = new DeleteFlashCardSetCommand(_navigationStore, flashCardSet);
         }
 
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

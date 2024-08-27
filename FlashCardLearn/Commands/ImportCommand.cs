@@ -30,6 +30,7 @@ namespace FlashCardLearn.Commands
             var flashcards = ConvertDTOsToFlashCards(dtos);
             SaveFlashCardToDatabase(flashcards);
             UpdateViewModelFlashCards(flashcards);
+            (_flashCardManagerViewModel.LearnCommand as CommandBase)?.RaiseCanExecutedChanged();
         }
         private async void SaveFlashCardToDatabase(List<FlashCard> flashcards)
         {

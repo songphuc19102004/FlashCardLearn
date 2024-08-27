@@ -20,7 +20,6 @@ namespace FlashCardLearn.ViewModel
 {
     public class HomeViewModel : ViewModelBase
     {
-        private ICommand _createFlashCardSetCommand;
         private ObservableCollection<FlashCardSet> _flashCardSets;
         private ObservableCollection<FlashCardSet> _filteredFlashCardSets;
         private FlashCardService _flashCardService;
@@ -57,8 +56,6 @@ namespace FlashCardLearn.ViewModel
             _flashCardSets = new ObservableCollection<FlashCardSet>(flashCardSets);
             FilteredFlashCardSets = _flashCardSets;
         }
-
-        private FlashCardSet _selectedFlashCardSet;
 
         public string SearchText
         {

@@ -2,9 +2,12 @@
 using FlashCardLearn.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
+using System.Windows.Input;
 
 namespace FlashCardLearn.Commands
 {

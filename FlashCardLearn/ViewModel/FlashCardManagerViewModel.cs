@@ -28,7 +28,7 @@ namespace FlashCardLearn.ViewModel
         private bool _canOption;
         public ICommand ExportCommand { get; }
         public ICommand ExecuteCreateSetCommand { get; }
-        public ICommand DeleteFlashCardSetCommand { get; }
+        
         public ICommand DeleteFlashCardCommand { get; }
         public ICommand LearnCommand { get; }
         public ICommand AutoSaveCommand { get; }
@@ -68,6 +68,16 @@ namespace FlashCardLearn.ViewModel
                 _selectedFlashCardSet = value;
                 OnPropertyChanged();
                 InitializeFlashCards();
+            }
+        }
+        private ICommand _deleteFlashCardSetCommand;
+        public ICommand DeleteFlashCardSetCommand
+        {
+            get => _deleteFlashCardSetCommand;
+            set
+            {
+                _deleteFlashCardSetCommand= value;
+                OnPropertyChanged();
             }
         }
 

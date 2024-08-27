@@ -4,7 +4,7 @@ A desktop app uses to learn with flash cards!
 Date started: August 14th 2024
 
 # Installation (Latest release)
-https://drive.google.com/file/d/1wmqN9yeLsioWKJrKBh6EZj1JI9L674v6
+https://drive.google.com/file/d/1WCJ0cv6sLgZq4De5Pct8Qk3TBI_019ep
 
 # Future updates
   - Import quizlet flash card set to your desktop app.
